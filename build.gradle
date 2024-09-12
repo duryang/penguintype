@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.github.duryang'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jline:jline:3.26.3'
+
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    testImplementation platform('org.junit:junit-bom:5.10.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+shadowJar {
+    archiveBaseName.set('penguintype')
+    archiveVersion.set('1.0.0')
+    archiveClassifier.set('all')
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.github.duryang.penguintype.PenguinTypeApp'
+        )
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
