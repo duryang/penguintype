@@ -31,7 +31,8 @@ public class PenguinTypeApp {
 
             SessionFormatter formatter = new ColoredFormatter(session, terminal.getWidth());
 
-            while (true) {
+            boolean available = true;
+            while (available) {
                 // refresh by basically doing "Ctrl + L"
                 terminal.puts(InfoCmp.Capability.clear_screen);
 
@@ -41,19 +42,23 @@ public class PenguinTypeApp {
                 int input = terminal.reader().read();
                 // TODO: validate and decide action
 
-                if (input == 32) {
-                    boolean available = session.next();
-                    if (!available) {
-                        System.out.println("FINITO");
+                Action action = InputMapper.toAction(input);
+
+                switch (action) {
+                    case TYPE:
+                        session.type((char) input);
                         break;
-                    }
-                } else {
-                    session.type((char) input);
+                    case NEXT:
+                        available = session.next();
+                    case UNDO:
+                        // TODO
+                        break;
+                    default:
+                        break;
                 }
-
-
             }
 
+            System.out.println("FINITO");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
