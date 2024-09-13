@@ -1,6 +1,6 @@
 package com.github.duryang.penguintype;
 
-import com.github.duryang.penguintype.formatter.ColoredFormatter;
+import com.github.duryang.penguintype.formatter.colored.ColoredFormatter;
 import com.github.duryang.penguintype.formatter.SessionFormatter;
 import com.github.duryang.penguintype.state.Session;
 import org.jline.terminal.Terminal;
