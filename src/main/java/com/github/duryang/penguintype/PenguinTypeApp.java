@@ -16,6 +16,12 @@ public class PenguinTypeApp {
         // TODO: display loading screen
         // TODO: load the words from the file
 
+        // Bring back the cursor when the app terminates
+        // TODO: for some reason this does not run when interrupted with ctrl + c
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.print("\u001B[?25h");
+        }));
+
         Session session;
         try {
             session = SessionFactory.fromSource("build/resources/main/words.txt");
@@ -40,8 +46,6 @@ public class PenguinTypeApp {
                 terminal.flush();
 
                 int input = terminal.reader().read();
-                // TODO: validate and decide action
-
                 Action action = InputMapper.toAction(input);
 
                 switch (action) {
@@ -50,6 +54,7 @@ public class PenguinTypeApp {
                         break;
                     case NEXT:
                         available = session.next();
+                        break;
                     case UNDO:
                         // TODO
                         break;
