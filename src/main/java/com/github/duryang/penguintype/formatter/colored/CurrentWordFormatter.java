@@ -1,9 +1,14 @@
 package com.github.duryang.penguintype.formatter.colored;
 
 import com.github.duryang.penguintype.formatter.AnsiColor;
+import com.github.duryang.penguintype.formatter.LineBreakingTextBuilder;
 import com.github.duryang.penguintype.state.Word;
 
-public class CurrentWordBuilder extends ProgressBuilder {
+public class CurrentWordFormatter extends ProgressFormatter {
+
+    public CurrentWordFormatter(LineBreakingTextBuilder builder) {
+        super(builder);
+    }
 
     @Override
     protected void appendOmittedChars(Word word) {
@@ -23,6 +28,5 @@ public class CurrentWordBuilder extends ProgressBuilder {
                 builder.append(rest);
             }
         }
-
     }
 }

@@ -1,6 +1,7 @@
 package com.github.duryang.penguintype.formatter.colored;
 
 import com.github.duryang.penguintype.formatter.AnsiColor;
+import com.github.duryang.penguintype.formatter.LineBreakingTextBuilder;
 import com.github.duryang.penguintype.formatter.Observer;
 import com.github.duryang.penguintype.formatter.SessionFormatter;
 import com.github.duryang.penguintype.state.Session;
@@ -9,14 +10,12 @@ import com.github.duryang.penguintype.state.Word;
 public class ColoredFormatter implements SessionFormatter, Observer {
 
     private final Session session;
-    // TODO: use this to add a new line based on terminal width
-    private final int terminalWidth;
 
-    private final ProgressBuilder progressBuilder = new ProgressBuilder();
+    private final ProgressFormatter progressFormatter;
 
     public ColoredFormatter(Session session, int terminalWidth) {
         this.session = session;
-        this.terminalWidth = terminalWidth;
+        this.progressFormatter = new ProgressFormatter(terminalWidth);
 
         session.add(this);
     }
@@ -24,17 +23,12 @@ public class ColoredFormatter implements SessionFormatter, Observer {
     @Override
     public String format() {
 
-        String progressString = progressBuilder.toString();
-
-        var currentWordBuilder = new CurrentWordBuilder();
-        currentWordBuilder.append(session.getCurrentWord());
-
-        StringBuilder builder = new StringBuilder(progressString);
-        builder.append(currentWordBuilder);
+        // The progress builder is ready at this point. We just need to get a copy of it.
+        LineBreakingTextBuilder builder = withCurrentWord(progressFormatter.getBuilder());
 
         builder.append(AnsiColor.DEFAULT.getCode());
         for (int i = session.getProgress().getTypedWords().size() + 1; i < session.getWords().length; i++) {
-            appendNotTypedWord(session.getWords()[i], builder);
+            builder.appendWhole(session.getWords()[i]);
         }
 
         // hide the cursor
@@ -43,9 +37,11 @@ public class ColoredFormatter implements SessionFormatter, Observer {
         return builder.toString();
     }
 
-    private void appendNotTypedWord(String word, StringBuilder builder) {
-        builder.append(word);
-        builder.append(' ');
+    private LineBreakingTextBuilder withCurrentWord(LineBreakingTextBuilder builder) {
+        var currentWordFormatter = new CurrentWordFormatter(builder);
+        currentWordFormatter.append(session.getCurrentWord());
+
+        return builder;
     }
 
     /**
@@ -54,6 +50,6 @@ public class ColoredFormatter implements SessionFormatter, Observer {
     @Override
     public void update() {
         Word newlyAddedWord = session.getProgress().getTypedWords().getLast();
-        progressBuilder.append(newlyAddedWord);
+        progressFormatter.append(newlyAddedWord);
     }
 }

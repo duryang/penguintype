@@ -1,26 +1,31 @@
 package com.github.duryang.penguintype.formatter.colored;
 
 import com.github.duryang.penguintype.formatter.AnsiColor;
+import com.github.duryang.penguintype.formatter.LineBreakingTextBuilder;
 import com.github.duryang.penguintype.state.Word;
 
 import java.util.List;
 
-public class ProgressBuilder {
+public class ProgressFormatter {
 
-    protected final StringBuilder builder = new StringBuilder();
+    protected final LineBreakingTextBuilder builder;
 
     protected AnsiColor currentColor = AnsiColor.DEFAULT;
 
+    public ProgressFormatter(int width) {
+        this.builder = new LineBreakingTextBuilder(width);
+    }
+
+    public ProgressFormatter(LineBreakingTextBuilder builder) {
+        this.builder = builder;
+    }
+
     public void append(Word word) {
-        // TODO: check if new line is needed, append it if so
+        builder.reserve(word.getLength());
 
         appendTypedChars(word);
-
         appendOmittedChars(word);
-
         appendExtraChars(word);
-
-        builder.append(' ');
     }
 
     private void appendTypedChars(Word word) {
@@ -65,8 +70,7 @@ public class ProgressBuilder {
         builder.append(currentColor.getCode());
     }
 
-    @Override
-    public String toString() {
-        return builder.toString();
+    public LineBreakingTextBuilder getBuilder() {
+        return new LineBreakingTextBuilder(builder);
     }
 }

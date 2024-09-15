@@ -7,6 +7,8 @@ import java.util.List;
 
 @Getter
 public class Word {
+    private final int EXTRA_LIMIT = 10;
+
     private final String word;
     private final List<Boolean> typed;
     private final List<Character> extra;
@@ -19,10 +21,16 @@ public class Word {
 
     public void type(char c) {
         if (typed.size() == word.length()) {
-            extra.add(c);
+            if (extra.size() < EXTRA_LIMIT) {
+                extra.add(c);
+            }
         }
         else {
             typed.add(word.charAt(typed.size()) == c);
         }
+    }
+
+    public int getLength() {
+        return Math.max(typed.size() + extra.size(), word.length());
     }
 }
