@@ -10,7 +10,7 @@ public class CurrentWordBuilder extends ProgressBuilder {
         int typedLength = word.getTyped().size();
 
         if (typedLength < word.getWord().length()) {
-            resetColor();
+            changeColor(AnsiColor.DEFAULT);
 
             char currentChar = word.getWord().charAt(typedLength);
 
@@ -24,10 +24,5 @@ public class CurrentWordBuilder extends ProgressBuilder {
             }
         }
 
-    }
-
-    protected void resetColor() {
-        currentColor = AnsiColor.DEFAULT;
-        builder.append(currentColor.getCode());
     }
 }

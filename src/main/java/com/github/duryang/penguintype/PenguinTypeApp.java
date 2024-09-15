@@ -13,9 +13,6 @@ public class PenguinTypeApp {
     public static void main(String[] args) {
         // TODO: parse command line args. words file name/special name, word count
 
-        // TODO: display loading screen
-        // TODO: load the words from the file
-
         // Bring back the cursor when the app terminates
         // TODO: for some reason this does not run when interrupted with ctrl + c
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -29,7 +26,6 @@ public class PenguinTypeApp {
             System.out.println("Could not load from the file...");
             return;
         }
-
 
         try (Terminal terminal = TerminalBuilder.builder().system(true).build()) {
 

@@ -46,7 +46,7 @@ public class ProgressBuilder {
 
     private void appendExtraChars(Word word) {
         if (!word.getExtra().isEmpty()) {
-            checkAndChangeColor(AnsiColor.RED);
+            changeColor(AnsiColor.DARK_RED);
         }
         for (Character extraChar : word.getExtra()) {
             builder.append(extraChar);
@@ -58,6 +58,11 @@ public class ProgressBuilder {
             currentColor = desiredColor;
             builder.append(currentColor.getCode());
         }
+    }
+
+    protected void changeColor(AnsiColor color) {
+        currentColor = color;
+        builder.append(currentColor.getCode());
     }
 
     @Override
