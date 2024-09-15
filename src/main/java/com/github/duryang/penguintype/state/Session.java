@@ -47,6 +47,10 @@ public class Session implements Observable {
         currentWord.type(c);
     }
 
+    public void undo() {
+        currentWord.undo();
+    }
+
     @Override
     public void add(Observer observer) {
         obs.add(observer);

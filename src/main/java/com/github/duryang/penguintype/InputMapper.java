@@ -7,7 +7,7 @@ public class InputMapper {
     public static Action toAction(int input) {
         if (input == 32) {
             return Action.NEXT;
-        } else if (input == 8) {
+        } else if (input == 8 || input == 127) {
             return Action.UNDO;
         } else if (input > 32 && input < 127) {
             return Action.TYPE;

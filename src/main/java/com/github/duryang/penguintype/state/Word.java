@@ -30,6 +30,14 @@ public class Word {
         }
     }
 
+    public void undo() {
+        if (!extra.isEmpty()) {
+            extra.removeLast();
+        } else if (!typed.isEmpty()) {
+            typed.removeLast();
+        }
+    }
+
     public int getLength() {
         return Math.max(typed.size() + extra.size(), word.length());
     }

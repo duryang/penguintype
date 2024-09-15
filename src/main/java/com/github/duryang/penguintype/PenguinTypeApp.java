@@ -52,7 +52,7 @@ public class PenguinTypeApp {
                         available = session.next();
                         break;
                     case UNDO:
-                        // TODO
+                        session.undo();
                         break;
                     default:
                         break;
