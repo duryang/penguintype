@@ -21,7 +21,7 @@ public class PenguinTypeApp {
 
         Session session;
         try {
-            session = SessionFactory.fromSource("build/resources/main/words.txt");
+            session = SessionFactory.fromInternalResource("words.txt");
         } catch (IOException e) {
             System.out.println("Could not load from the file...");
             return;
