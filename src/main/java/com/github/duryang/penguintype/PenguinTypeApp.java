@@ -59,7 +59,8 @@ public class PenguinTypeApp {
                 }
             }
 
-            System.out.println("FINITO");
+            System.out.println();
+            System.out.println(session.getScoring().stats());
 
         } catch (IOException e) {
             throw new RuntimeException(e);

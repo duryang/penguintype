@@ -1,5 +1,6 @@
 package com.github.duryang.penguintype.state;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.util.LinkedList;
@@ -7,6 +8,8 @@ import java.util.List;
 
 @Getter
 public class Word {
+
+    @Getter(AccessLevel.NONE)
     private final int EXTRA_LIMIT = 10;
 
     private final String word;
@@ -38,7 +41,13 @@ public class Word {
         }
     }
 
-    public int getLength() {
+    public int getWidth() {
         return Math.max(typed.size() + extra.size(), word.length());
+    }
+
+    public boolean isCorrect() {
+        return extra.isEmpty() &&
+                typed.size() == word.length() &&
+                typed.stream().allMatch(Boolean::booleanValue);
     }
 }

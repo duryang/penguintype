@@ -21,7 +21,7 @@ public class ProgressFormatter {
     }
 
     public void append(Word word) {
-        builder.reserve(word.getLength());
+        builder.reserve(word.getWidth());
 
         appendTypedChars(word);
         appendOmittedChars(word);

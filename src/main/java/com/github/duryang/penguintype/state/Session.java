@@ -15,11 +15,14 @@ public class Session implements Observable {
     private int currentIndex = 0;
     private Word currentWord;
 
+    private final Scoring scoring;
+
     private final List<Observer> obs = new LinkedList<>();
 
     public Session(String[] words) {
         this.words = words;
         this.progress = new Progress();
+        this.scoring = new Scoring();
 
         currentWord = new Word(words[0]);
     }
@@ -30,6 +33,9 @@ public class Session implements Observable {
      * @return false if there is no next.
      */
     public boolean next() {
+        scoring.registerStartTime();
+        scoring.count(currentWord);
+
         progress.add(currentWord);
 
         currentIndex++;
@@ -44,6 +50,7 @@ public class Session implements Observable {
     }
 
     public void type(char c) {
+        scoring.registerStartTime();
         currentWord.type(c);
     }
 
