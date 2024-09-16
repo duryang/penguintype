@@ -18,13 +18,13 @@ public class Scoring {
 
     public void count(Word word) {
         if (word.isCorrect()) {
-            correctChars += word.getWord().length();
+            correctChars += word.getWord().length() + 1;
             correctWords++;
         } else {
             incorrectWords++;
         }
 
-        rawCorrectChars += (int) word.getTyped().stream().filter(Boolean::booleanValue).count();
+        rawCorrectChars += (int) word.getTyped().stream().filter(Boolean::booleanValue).count() + 1;
     }
 
     public double wpmClean() {
