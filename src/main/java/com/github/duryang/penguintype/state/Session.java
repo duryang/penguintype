@@ -72,9 +72,4 @@ public class Session implements Observable {
     public void notifyObservers() {
         obs.forEach(Observer::update);
     }
-
-    // TODO: support undo for the current word (go back 1 letter).
-
-    // TODO: add some sort of scoring system. the simplest is probable count the number of correct letters in the current word when doing a next()
-    // TODO: also could just measure the time that took to complete the test
 }
