@@ -59,9 +59,12 @@ public class CommandLineOptions {
             }
             if (cmd.hasOption(wordCountOption)) {
                 wordCount = Integer.parseInt(cmd.getOptionValue(wordCountOption));
+                if (wordCount < 1) {
+                    throw new IllegalArgumentException("Word count must be positive");
+                }
             }
 
-        } catch (ParseException|NumberFormatException e) {
+        } catch (ParseException|IllegalArgumentException e) {
             System.out.println("Invalid options");
             helpFormatter.printHelp("penguintype", options);
 

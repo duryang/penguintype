@@ -1,9 +1,8 @@
 package com.github.duryang.penguintype;
 
-import com.github.duryang.penguintype.formatter.colored.ColoredFormatter;
 import com.github.duryang.penguintype.formatter.SessionFormatter;
+import com.github.duryang.penguintype.formatter.colored.ColoredFormatter;
 import com.github.duryang.penguintype.state.Session;
-import org.apache.commons.cli.ParseException;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;

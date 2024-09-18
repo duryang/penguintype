@@ -1,8 +1,5 @@
 package com.github.duryang.penguintype.state;
 
-import lombok.Getter;
-
-@Getter
 public class Scoring {
     private long startTime = 0L;
     private int correctChars = 0;
@@ -48,8 +45,8 @@ public class Scoring {
 
     public String stats() {
         return String.format("Correct: %s\nIncorrect: %s\nWPM: %s\nRaw: %s",
-                getCorrectWords(),
-                getIncorrectWords(),
+                correctWords,
+                incorrectWords,
                 Math.round(wpmClean()),
                 Math.round(wpmRaw()));
     }

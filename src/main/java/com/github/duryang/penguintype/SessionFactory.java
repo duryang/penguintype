@@ -32,7 +32,7 @@ public class SessionFactory {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    words.add(line.trim());  // Add the word to the list
+                    words.add(line.trim());
                 }
             }
         } else {
