@@ -6,7 +6,6 @@ import com.github.duryang.penguintype.state.Session;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;
-import sun.misc.Signal;
 
 import java.io.IOException;
 

@@ -9,7 +9,7 @@ public enum AnsiColor {
     DARK_RED("\u001B[38;5;52m"),
     DEFAULT("\u001B[0m");
 
-    private AnsiColor(String code) {
+    AnsiColor(String code) {
         this.code = code;
     }
 
