@@ -8,7 +8,9 @@ Build with the command \
 Requires Java 21 or above.
 
 ## Running
-`java -jar build/libs/penguintype-1.0.0-all.jar`
+`java -jar build/libs/penguintype-1.0.0-all.jar`\
+\
+Run with the `-h` flag to see options.
 
 ## Releases
 Running releases does not require Java as they are bundled with JRE.\
