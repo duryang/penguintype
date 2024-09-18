@@ -3,6 +3,7 @@ package com.github.duryang.penguintype;
 import com.github.duryang.penguintype.formatter.colored.ColoredFormatter;
 import com.github.duryang.penguintype.formatter.SessionFormatter;
 import com.github.duryang.penguintype.state.Session;
+import org.apache.commons.cli.ParseException;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;
@@ -11,7 +12,15 @@ import java.io.IOException;
 
 public class PenguinTypeApp {
     public static void main(String[] args) {
-        // TODO: parse command line args. words file name/special name, word count
+
+        try {
+            boolean continueExecution = CommandLineOptions.register(args);
+            if (!continueExecution) {
+                return;
+            }
+        } catch (Exception e) {
+            return;
+        }
 
         // Bring back the cursor when the app terminates
         // TODO: for some reason this does not run when interrupted with ctrl + c
@@ -21,7 +30,11 @@ public class PenguinTypeApp {
 
         Session session;
         try {
-            session = SessionFactory.fromInternalResource("words.txt");
+            if (CommandLineOptions.getFilePath() == null) {
+                session = SessionFactory.fromInternalResource("words.txt");
+            } else {
+                session = SessionFactory.fromFile(CommandLineOptions.getFilePath());
+            }
         } catch (IOException e) {
             System.out.println("Could not load from the file...");
             return;

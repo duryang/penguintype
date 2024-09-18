@@ -43,7 +43,7 @@ public class SessionFactory {
     }
 
     private static Session build(List<String> allWords) {
-        int count = 30;
+        int count = CommandLineOptions.getWordCount();
         var words = new String[count];
 
         for (int i = 0; i < count; i++) {
