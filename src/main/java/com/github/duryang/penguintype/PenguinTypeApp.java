@@ -6,6 +6,7 @@ import com.github.duryang.penguintype.state.Session;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;
+import sun.misc.Signal;
 
 import java.io.IOException;
 
@@ -22,9 +23,8 @@ public class PenguinTypeApp {
         }
 
         // Bring back the cursor when the app terminates
-        // TODO: for some reason this does not run when interrupted with ctrl + c
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.print("\u001B[?25h");
+            System.out.println("\u001B[?25h");
         }));
 
         Session session;
@@ -40,6 +40,9 @@ public class PenguinTypeApp {
         }
 
         try (Terminal terminal = TerminalBuilder.builder().system(true).build()) {
+
+            // because read() is blocking, and shutdown hook is not executed on SIGINT
+            terminal.handle(Terminal.Signal.INT, signal -> System.exit(0));
 
             terminal.enterRawMode();
 
