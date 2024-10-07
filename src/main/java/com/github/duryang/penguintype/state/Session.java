@@ -33,6 +33,12 @@ public class Session implements Observable {
      * @return false if there is no next.
      */
     public boolean next() {
+        // Do not skip the word if nothing is typed for the current word.
+        // For accidental double space.
+        if (currentWord.getTyped().isEmpty()) {
+            return true;
+        }
+
         scoring.registerStartTime();
         scoring.count(currentWord);
 
