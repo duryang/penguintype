@@ -3,6 +3,9 @@ package com.github.duryang.penguintype;
 import lombok.Getter;
 import org.apache.commons.cli.*;
 
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 public class CommandLineOptions {
 
     @Getter
@@ -10,6 +13,9 @@ public class CommandLineOptions {
 
     @Getter
     private static int wordCount = 30;
+
+    @Getter
+    private static Pattern pattern = null;
 
     /**
      * Parses and registers the command line options.
@@ -38,11 +44,19 @@ public class CommandLineOptions {
                 .desc("Number of words")
                 .build();
 
+        Option patternOption = Option.builder("p")
+                .longOpt("pattern")
+                .hasArg()
+                .argName("\"regex\"")
+                .desc("Get words matching the regex pattern")
+                .build();
+
         var options = new Options();
 
         options.addOption(helpOption);
         options.addOption(fileOption);
         options.addOption(wordCountOption);
+        options.addOption(patternOption);
 
         CommandLineParser parser = new DefaultParser();
         var helpFormatter = new HelpFormatter();
@@ -61,6 +75,14 @@ public class CommandLineOptions {
                 wordCount = Integer.parseInt(cmd.getOptionValue(wordCountOption));
                 if (wordCount < 1) {
                     throw new IllegalArgumentException("Word count must be positive");
+                }
+            }
+            if (cmd.hasOption(patternOption)) {
+                String regex = cmd.getOptionValue(patternOption);
+                try {
+                    pattern = Pattern.compile(regex);
+                } catch (PatternSyntaxException e) {
+                    throw new IllegalArgumentException("Invalid regex: " + regex);
                 }
             }
 

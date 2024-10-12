@@ -1,5 +1,6 @@
 package com.github.duryang.penguintype;
 
+import com.github.duryang.penguintype.exception.NoMatchingWordsException;
 import com.github.duryang.penguintype.formatter.SessionFormatter;
 import com.github.duryang.penguintype.formatter.colored.ColoredFormatter;
 import com.github.duryang.penguintype.state.Session;
@@ -35,6 +36,9 @@ public class PenguinTypeApp {
             }
         } catch (IOException e) {
             System.out.println("Could not load from the file...");
+            return;
+        } catch (NoMatchingWordsException e) {
+            System.out.println("No matching words found...");
             return;
         }
 

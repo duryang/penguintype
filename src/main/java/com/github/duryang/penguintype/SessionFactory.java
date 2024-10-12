@@ -1,5 +1,6 @@
 package com.github.duryang.penguintype;
 
+import com.github.duryang.penguintype.exception.NoMatchingWordsException;
 import com.github.duryang.penguintype.state.Session;
 
 import java.io.BufferedReader;
@@ -12,18 +13,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class SessionFactory {
 
     private static final Random RANDOM = new Random();
 
-    public static Session fromFile(String path) throws IOException {
+    public static Session fromFile(String path) throws IOException, NoMatchingWordsException {
         List<String> allWords = Files.readAllLines(Path.of(path));
 
         return build(allWords);
     }
 
-    public static Session fromInternalResource(String fileName) throws IOException {
+    public static Session fromInternalResource(String fileName) throws IOException, NoMatchingWordsException {
         List<String> words = new LinkedList<>();
 
         InputStream inputStream = SessionFactory.class.getClassLoader().getResourceAsStream(fileName);
@@ -42,7 +44,18 @@ public class SessionFactory {
         return build(words);
     }
 
-    private static Session build(List<String> allWords) {
+    private static Session build(List<String> allWords) throws NoMatchingWordsException {
+        Pattern pattern = CommandLineOptions.getPattern();
+        if (pattern != null) {
+            allWords = allWords.stream()
+                    .filter(word -> pattern.matcher(word).find())
+                    .toList();
+        }
+
+        if (allWords.isEmpty()) {
+            throw new NoMatchingWordsException();
+        }
+
         int count = CommandLineOptions.getWordCount();
         var words = new String[count];
 
