@@ -11,6 +11,8 @@ public class InputMapper {
             return Action.UNDO;
         } else if (input > 32 && input < 127) {
             return Action.TYPE;
+        } else if (input == 9) {
+            return Action.RESET;
         } else {
             return Action.NOTHING;
         }

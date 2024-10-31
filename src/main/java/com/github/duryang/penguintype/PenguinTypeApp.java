@@ -4,6 +4,8 @@ import com.github.duryang.penguintype.exception.NoMatchingWordsException;
 import com.github.duryang.penguintype.formatter.SessionFormatter;
 import com.github.duryang.penguintype.formatter.colored.ColoredFormatter;
 import com.github.duryang.penguintype.state.Session;
+import com.github.duryang.penguintype.words.SessionFactory;
+import com.github.duryang.penguintype.words.WordsContainer;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;
@@ -27,13 +29,8 @@ public class PenguinTypeApp {
             System.out.println("\u001B[?25h");
         }));
 
-        Session session;
         try {
-            if (CommandLineOptions.getFilePath() == null) {
-                session = SessionFactory.fromInternalResource("words.txt");
-            } else {
-                session = SessionFactory.fromFile(CommandLineOptions.getFilePath());
-            }
+            WordsContainer.instance.load();
         } catch (IOException e) {
             System.out.println("Could not load from the file...");
             return;
@@ -49,6 +46,7 @@ public class PenguinTypeApp {
 
             terminal.enterRawMode();
 
+            Session session = SessionFactory.build(WordsContainer.instance.getWords());
             SessionFormatter formatter = new ColoredFormatter(session, terminal.getWidth());
 
             boolean available = true;
@@ -72,6 +70,9 @@ public class PenguinTypeApp {
                     case UNDO:
                         session.undo();
                         break;
+                    case RESET:
+                        session = SessionFactory.build(WordsContainer.instance.getWords());
+                        formatter = new ColoredFormatter(session, terminal.getWidth());
                     default:
                         break;
                 }
