@@ -1,6 +1,14 @@
 ## About
 This is a CMD typing exercise inspired by [Monkeytype](https://monkeytype.com/).
 
+## Usage
+| Option | Description |
+|--------|-------------|
+| `-f`, `--file <file-path>` | Load words from a file. |
+| `-h`, `--help` | Show the help message. |
+| `-n <number>` | Specify the number of words. |
+| `-p`, `--pattern <"regex">` | Get words matching the specified regular expression pattern. |
+
 ## Building
 Build with the command \
 `./gradlew clean shadowJar` \
